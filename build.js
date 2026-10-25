@@ -3,7 +3,7 @@ const path = require('path');
 const { Readable } = require('stream');
 const csv = require('csv-parser');
 
-// Link export CSV trực tiếp từ Google Sheet
+// Link export CSV trực tiếp từ Google Sheet của anh
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1G2OEe6Un6xms2vGLjhOqeQn8wTBx5AGSPU0nrcUwn6s/export?format=csv&gid=0';
 
 async function fetchProductsFromSheet() {
@@ -33,7 +33,8 @@ async function fetchProductsFromSheet() {
                         price: Number(cleanRow.price) || 0,
                         unit: cleanRow.unit ? cleanRow.unit.trim() : '',
                         heavy: cleanRow.heavy === 'TRUE' || cleanRow.heavy === 'true' || cleanRow.heavy === '1',
-                        image: cleanRow.image ? cleanRow.image.trim() : ''
+                        image: cleanRow.image ? cleanRow.image.trim() : '',
+                        description: cleanRow.description ? cleanRow.description.trim() : ''
                     });
                 }
             })
@@ -66,7 +67,7 @@ async function buildSite() {
         if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir);
         fs.writeFileSync(path.join(publicDir, 'index.html'), finalHtml, 'utf8');
 
-        // 👉 TỰ ĐỘNG COPY FILE app.js SANG THƯ MỤC public/js
+        // Copy file app.js sang thư mục public/js
         const publicJsDir = path.join(publicDir, 'js');
         if (!fs.existsSync(publicJsDir)) fs.mkdirSync(publicJsDir, { recursive: true });
         
@@ -77,7 +78,7 @@ async function buildSite() {
             console.log('✅ Đã copy app.js sang public/js/app.js!');
         }
 
-        // 🚀 TỰ ĐỘNG COPY TOÀN BỘ THƯ MỤC images SANG public/images
+        // Tự động copy toàn bộ thư mục images sang public/images
         const srcImagesDir = path.join(__dirname, 'images');
         const destImagesDir = path.join(publicDir, 'images');
         if (fs.existsSync(srcImagesDir)) {

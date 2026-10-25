@@ -6,7 +6,8 @@
     "price": 215000,
     "unit": "Túi",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": "Can 3.6kg, hương cửa trên/trước"
   },
   {
     "id": "SP02",
@@ -15,7 +16,8 @@
     "price": 245000,
     "unit": "Thùng",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": "Thùng 24 lon 330ml"
   },
   {
     "id": "SP03",
@@ -24,7 +26,8 @@
     "price": 235000,
     "unit": "Can",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": ""
   },
   {
     "id": "SP04",
@@ -33,7 +36,8 @@
     "price": 12000,
     "unit": "Kg",
     "heavy": false,
-    "image": "/images/gao.jpg"
+    "image": "/images/gao.jpg",
+    "description": ""
   },
   {
     "id": "SP05",
@@ -42,6 +46,7 @@
     "price": 15000,
     "unit": "Kg",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": ""
   }
 ]

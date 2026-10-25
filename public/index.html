@@ -515,7 +515,8 @@
     "price": 215000,
     "unit": "Túi",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": "Can 3.6kg, hương cửa trên/trước"
   },
   {
     "id": "SP02",
@@ -524,7 +525,8 @@
     "price": 245000,
     "unit": "Thùng",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": "Thùng 24 lon 330ml"
   },
   {
     "id": "SP03",
@@ -533,7 +535,8 @@
     "price": 235000,
     "unit": "Can",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": ""
   },
   {
     "id": "SP04",
@@ -542,7 +545,8 @@
     "price": 12000,
     "unit": "Kg",
     "heavy": false,
-    "image": "/images/gao.jpg"
+    "image": "/images/gao.jpg",
+    "description": ""
   },
   {
     "id": "SP05",
@@ -551,7 +555,8 @@
     "price": 15000,
     "unit": "Kg",
     "heavy": false,
-    "image": ""
+    "image": "",
+    "description": ""
   }
 ];</script>
 
@@ -669,7 +674,7 @@
 
             const filtered = productList.filter(p => {
                 const matchesCat = currentCategory === 'all' || p.category === currentCategory;
-                const matchesSearch = p.name.toLowerCase().includes(searchVal);
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || (p.description && p.description.toLowerCase().includes(searchVal));
                 return matchesCat && matchesSearch;
             });
 
@@ -695,7 +700,8 @@
                     <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                         <div>
                             <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">${p.unit}</span>
-                            <h3 class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-2 hover:text-brand-600 transition-colors">${p.name}</h3>
+                            <h3 class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1 hover:text-brand-600 transition-colors">${p.name}</h3>
+                            <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${p.description || ''}</p>
                         </div>
                         <div class="mt-3 flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
                             <div>
@@ -898,53 +904,49 @@
         }
 
         function sendOrderToSheetSilently(paymentStatus) {
-    // Tự tạo mã đơn ngẫu nhiên nếu chưa có để tránh bị rỗng
-    if (!currentCheckoutOrderId) {
-        currentCheckoutOrderId = 'DH' + Math.floor(1000 + Math.random() * 9000);
-    }
+            if (!currentCheckoutOrderId) {
+                currentCheckoutOrderId = 'DH' + Math.floor(1000 + Math.random() * 9000);
+            }
 
-    const name = document.getElementById('custName').value || "Khách hàng lẻ";
-    const phone = document.getElementById('custPhone').value || "0000";
-    const street = document.getElementById('custStreet').value || "";
-    const ward = document.getElementById('custWard').value || "";
-    let address = `${street}, ${ward}`;
-    if (customerGPS) address += ` [${customerGPS}]`;
+            const name = document.getElementById('custName').value || "Khách hàng lẻ";
+            const phone = document.getElementById('custPhone').value || "0000";
+            const street = document.getElementById('custStreet').value || "";
+            const ward = document.getElementById('custWard').value || "";
+            let address = `${street}, ${ward}`;
+            if (customerGPS) address += ` [${customerGPS}]`;
 
-    const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked')?.value || "Sáng Thứ 7 (8h00 - 12h00)";
-    
-    // Tính lại tổng tiền an toàn từ giỏ hàng nếu chưa có
-    if (!currentCheckoutTotal) {
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shippingFee = subtotal >= 300000 ? 0 : 30000;
-        currentCheckoutTotal = subtotal + shippingFee;
-    }
+            const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked')?.value || "Sáng Thứ 7 (8h00 - 12h00)";
+            
+            if (!currentCheckoutTotal) {
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const shippingFee = subtotal >= 300000 ? 0 : 30000;
+                currentCheckoutTotal = subtotal + shippingFee;
+            }
 
-    const chiTietChuoi = cart.map(item => `${item.quantity}x ${item.name}`).join(", ");
+            const chiTietChuoi = cart.map(item => `${item.quantity}x ${item.name}`).join(", ");
 
-    // Gửi dạng URL Encoded Form chuẩn xác cho Google Apps Script
-    const formData = new URLSearchParams();
-    formData.append('maDon', currentCheckoutOrderId);
-    formData.append('tenKhach', name);
-    formData.append('soDienThoai', phone);
-    formData.append('diaChi', address);
-    formData.append('lichGiao', deliveryTime);
-    formData.append('thanhToan', paymentStatus);
-    formData.append('tongTien', currentCheckoutTotal);
-    formData.append('chiTietChuoi', chiTietChuoi);
+            const formData = new URLSearchParams();
+            formData.append('maDon', currentCheckoutOrderId);
+            formData.append('tenKhach', name);
+            formData.append('soDienThoai', phone);
+            formData.append('diaChi', address);
+            formData.append('lichGiao', deliveryTime);
+            formData.append('thanhToan', paymentStatus);
+            formData.append('tongTien', currentCheckoutTotal);
+            formData.append('chiTietChuoi', chiTietChuoi);
 
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcj2GtN6L6nr8FpIQXP8vxRXdjJ42-_uLjZ3KNHrwY7f1b02e9XvbL4pG_utA3538xrQ/exec';
-    
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-    }).catch(err => console.log(err));
-}
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcj2GtN6L6nr8FpIQXP8vxRXdjJ42-_uLjZ3KNHrwY7f1b02e9XvbL4pG_utA3538xrQ/exec';
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).catch(err => console.log(err));
+        }
 
         function finalizeSuccessfulOrder(paymentStatus) {
             if (paymentCheckInterval) clearInterval(paymentCheckInterval);
 
-            // GỌI ĐỒNG BỘ DỮ LIỆU LÊN GOOGLE SHEET & KÍCH HOẠT EMAIL NỔ ĐƠN
             sendOrderToSheetSilently(paymentStatus);
 
             const name = document.getElementById('custName').value;
