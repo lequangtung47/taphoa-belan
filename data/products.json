@@ -27,10 +27,19 @@
     "image": ""
   },
   {
-    "id": "SP4",
+    "id": "SP04",
     "name": "Gạo",
     "category": "Thực phẩm",
     "price": 12000,
+    "unit": "Kg",
+    "heavy": false,
+    "image": "/images/gao.jpg"
+  },
+  {
+    "id": "SP05",
+    "name": "Đường",
+    "category": "Gia vị & Bếp",
+    "price": 15000,
     "unit": "Kg",
     "heavy": false,
     "image": ""

@@ -77,6 +77,19 @@ async function buildSite() {
             console.log('✅ Đã copy app.js sang public/js/app.js!');
         }
 
+        // 🚀 TỰ ĐỘNG COPY TOÀN BỘ THƯ MỤC images SANG public/images
+        const srcImagesDir = path.join(__dirname, 'images');
+        const destImagesDir = path.join(publicDir, 'images');
+        if (fs.existsSync(srcImagesDir)) {
+            if (!fs.existsSync(destImagesDir)) fs.mkdirSync(destImagesDir, { recursive: true });
+            
+            const imageFiles = fs.readdirSync(srcImagesDir);
+            imageFiles.forEach(file => {
+                fs.copyFileSync(path.join(srcImagesDir, file), path.join(destImagesDir, file));
+            });
+            console.log('🖼️ Đã copy thành công toàn bộ hình ảnh sang public/images!');
+        }
+
         console.log('✅ Đã build thành công toàn bộ website!');
     } catch (error) {
         console.error('❌ Lỗi khi build website:', error.message);
