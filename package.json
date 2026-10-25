@@ -1,0 +1,16 @@
+{
+  "name": "bach-hoa-cuoi-tuan",
+  "version": "1.0.0",
+  "description": "Hệ thống Bách Hóa Cuối Tuần - SSG Node.js + Google Sheet",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && npx serve public"
+  },
+  "dependencies": {
+    "csv-parser": "^3.2.1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
