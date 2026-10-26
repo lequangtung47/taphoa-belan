@@ -581,36 +581,46 @@
         }
 
         function openAdminDashboard() {
-            toggleModal('adminModal');
-            const sheetBody = document.getElementById('sheetTableBody');
-            sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Đang tải dữ liệu thực tế từ Google Sheet...</td></tr>`;
+    // Yêu cầu nhập mã PIN quản trị (Mặc định anh có thể đổi số '8888' thành số bất kỳ)
+    let adminPin = prompt("🔒 Vui lòng nhập mã PIN Quản Trị (Mặc định: 8888):");
+    
+    if (adminPin === null) return; // Người dùng bấm Hủy
+    
+    if (adminPin !== "8888") {
+        alert("❌ Sai mật khẩu quản trị! Bạn không có quyền truy cập khu vực này.");
+        return;
+    }
 
-            fetch(`${GOOGLE_SCRIPT_URL}?action=getAllOrders`)
-                .then(res => res.json())
-                .then(data => {
-                    const list = data.orders || [];
-                    if (list.length === 0) {
-                        sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Chưa có đơn hàng nào trên hệ thống!</td></tr>`;
-                        return;
-                    }
-                    sheetBody.innerHTML = list.map(o => `
-                        <tr class="hover:bg-slate-50">
-                            <td class="p-2.5 font-bold font-mono text-brand-600 border-b">#${o.maDon}</td>
-                            <td class="p-2.5 text-slate-500 border-b">${o.thoiGian}</td>
-                            <td class="p-2.5 font-medium border-b">${o.tenKhach}</td>
-                            <td class="p-2.5 border-b">${o.soDienThoai}</td>
-                            <td class="p-2.5 text-slate-700 border-b">${o.diaChi}</td>
-                            <td class="p-2.5 font-semibold text-slate-700 border-b">${o.lichGiao}</td>
-                            <td class="p-2.5 font-bold border-b">${formatVND(o.tongTien)}</td>
-                            <td class="p-2.5 border-b"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${o.thanhToan}</span></td>
-                        </tr>
-                    `).join('');
-                })
-                .catch(err => {
-                    sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-red-500">Lỗi kết nối tới Google Sheet!</td></tr>`;
-                });
-        }
+    // Nếu đúng PIN, tiến hành mở Modal Admin và kéo dữ liệu
+    toggleModal('adminModal');
+    const sheetBody = document.getElementById('sheetTableBody');
+    sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Đang tải dữ liệu thực tế từ Google Sheet...</td></tr>`;
 
+    fetch(`${GOOGLE_SCRIPT_URL}?action=getAllOrders`)
+        .then(res => res.json())
+        .then(data => {
+            const list = data.orders || [];
+            if (list.length === 0) {
+                sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Chưa có đơn hàng nào trên hệ thống!</td></tr>`;
+                return;
+            }
+            sheetBody.innerHTML = list.map(o => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-2.5 font-bold font-mono text-brand-600 border-b">#${o.maDon}</td>
+                    <td class="p-2.5 text-slate-500 border-b">${o.thoiGian}</td>
+                    <td class="p-2.5 font-medium border-b">${o.tenKhach}</td>
+                    <td class="p-2.5 border-b">${o.soDienThoai}</td>
+                    <td class="p-2.5 text-slate-700 border-b">${o.diaChi}</td>
+                    <td class="p-2.5 font-semibold text-slate-700 border-b">${o.lichGiao}</td>
+                    <td class="p-2.5 font-bold border-b">${formatVND(o.tongTien)}</td>
+                    <td class="p-2.5 border-b"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${o.thanhToan}</span></td>
+                </tr>
+            `).join('');
+        })
+        .catch(err => {
+            sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-red-500">Lỗi kết nối tới Google Sheet!</td></tr>`;
+        });
+}
         function getCurrentLocation() {
             const statusText = document.getElementById('gpsStatus');
             if (!navigator.geolocation) { statusText.innerText = "Trình duyệt không hỗ trợ định vị GPS."; return; }
