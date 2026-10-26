@@ -85,11 +85,13 @@
                     </button>
                 </div>
 
-                <!-- Admin Dashboard Button -->
-                <button onclick="openAdminDashboard()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
-                    <i data-lucide="shield" class="w-4 h-4 text-emerald-600"></i>
-                    <span class="hidden sm:inline">Quản trị</span> Admin
-                </button>
+                <!-- Admin Dashboard Button (Tự động ẩn/hiện tùy tài khoản) -->
+                <div id="adminNavBtn" class="hidden">
+                    <button onclick="openAdminDashboard()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Quản trị</span> Admin
+                    </button>
+                </div>
 
                 <!-- Cart Button -->
                 <button onclick="toggleCartModal()" class="relative flex items-center gap-2 px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm rounded-xl transition-all shadow-md shadow-brand-600/20 active:scale-95">
@@ -196,54 +198,54 @@
         </div>
     </footer>
 
-    <!-- MODAL ĐĂNG NHẬP KHÁCH HÀNG -->
+    <!-- MODAL ĐĂNG NHẬP KHÁCH HÀNG & ADMIN -->
     <div id="loginModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog">
         <div class="min-h-screen px-4 flex items-center justify-center">
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('loginModal')"></div>
             <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative z-10 shadow-2xl">
                 <div class="flex items-center justify-between pb-3 border-b border-slate-200">
                     <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                        <i data-lucide="user-check" class="w-5 h-5 text-brand-600"></i> Đăng Nhập / Đăng Ký
+                        <i data-lucide="user-check" class="w-5 h-5 text-brand-600"></i> Đăng Nhập
                     </h3>
                     <button onclick="toggleModal('loginModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
                 <form onsubmit="handleUserLogin(event)" class="mt-4 space-y-3">
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Số điện thoại</label>
-                        <input type="tel" id="loginPhone" required placeholder="Nhập SĐT của bạn..." class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                        <input type="tel" id="loginPhone" required placeholder="Nhập SĐT..." class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mật khẩu / PIN (Mặc định 123456)</label>
-                        <input type="password" id="loginPass" value="123456" required class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mật khẩu</label>
+                        <input type="password" id="loginPass" placeholder="Mặc định: 123456" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
                     </div>
                     <p id="loginStatus" class="text-xs text-amber-600 hidden"></p>
                     <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">
-                        Tiếp Tục
+                        Đăng Nhập
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- MODAL XÁC THỰC ADMIN (BẢO MẬT KHÔNG LỘ PIN) -->
-    <div id="adminLoginModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog">
+    <!-- MODAL ĐỔI MẬT KHẨU -->
+    <div id="changePassModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog">
         <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('adminLoginModal')"></div>
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('changePassModal')"></div>
             <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative z-10 shadow-2xl space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-slate-200">
                     <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                        <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-600"></i> Xác Thực Quản Trị Viên
+                        <i data-lucide="key-round" class="w-5 h-5 text-amber-600"></i> Đổi Mật Khẩu
                     </h3>
-                    <button onclick="toggleModal('adminLoginModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+                    <button onclick="toggleModal('changePassModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
-                <form onsubmit="verifyAdminPin(event)" class="space-y-3">
+                <form onsubmit="handleChangePassword(event)" class="space-y-3">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mã PIN Quản Trị</label>
-                        <input type="password" id="adminPinInput" required placeholder="Nhập mã PIN bảo mật..." class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mật khẩu mới</label>
+                        <input type="password" id="newPassInput" required placeholder="Nhập mật khẩu mới..." class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
                     </div>
-                    <p id="adminPinError" class="text-xs text-red-600 font-semibold hidden">❌ Sai mã PIN, vui lòng thử lại!</p>
-                    <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">
-                        Truy Cập Trang Quản Trị
+                    <p id="changePassStatus" class="text-xs text-emerald-600 font-semibold hidden"></p>
+                    <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">
+                        Cập Nhật Mật Khẩu
                     </button>
                 </form>
             </div>
@@ -266,8 +268,13 @@
                 </div>
                 <div class="flex-1 overflow-y-auto py-4 space-y-3 custom-scrollbar" id="historyContainer"></div>
                 <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
-                    <button onclick="logoutUser()" class="text-xs font-bold text-red-600 hover:underline">Đăng Xuất Tài Khoản</button>
-                    <button onclick="toggleModal('historyModal')" class="px-4 py-2 bg-slate-800 text-white text-xs font-bold rounded-xl">Đóng</button>
+                    <button onclick="toggleModal('changePassModal')" class="text-xs font-bold text-amber-600 hover:underline flex items-center gap-1">
+                        <i data-lucide="key" class="w-3.5 h-3.5"></i> Đổi Mật Khẩu
+                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="logoutUser()" class="px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50 rounded-lg">Đăng Xuất</button>
+                        <button onclick="toggleModal('historyModal')" class="px-4 py-1.5 bg-slate-800 text-white text-xs font-bold rounded-lg">Đóng</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -444,7 +451,7 @@
         </div>
     </div>
 
-    <!-- ADMIN MODAL (BẢNG QUẢN TRỊ THỰC TẾ) -->
+    <!-- ADMIN MODAL -->
     <div id="adminModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog">
         <div class="min-h-screen px-4 flex items-center justify-center">
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('adminModal')"></div>
@@ -485,6 +492,9 @@
 
     <script>
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcj2GtN6L6nr8FpIQXP8vxRXdjJ42-_uLjZ3KNHrwY7f1b02e9XvbL4pG_utA3538xrQ/exec';
+        
+        // 🔑 SỐ ĐIỆN THOẠI ADMIN CỦA ANH
+        const ADMIN_PHONE = '0867676416';
 
         const CATEGORIES = [
             { id: 'all', name: 'Tất Cả', icon: 'grid' },
@@ -513,8 +523,17 @@
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
         }
 
+        function cleanPhone(phone) {
+            if (!phone) return "";
+            let str = String(phone).trim().replace(/\D/g, "");
+            if (str.length > 0 && !str.startsWith("0")) str = "0" + str;
+            return str;
+        }
+
         function updateAccountUI() {
             const btnContainer = document.getElementById('accountNavBtn');
+            const adminBtnContainer = document.getElementById('adminNavBtn');
+
             if (currentUser) {
                 btnContainer.innerHTML = `
                     <button onclick="openUserHistory()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-xl transition-colors border border-brand-200">
@@ -522,6 +541,12 @@
                         <span>${currentUser.tenKhach || currentUser.soDienThoai}</span>
                     </button>
                 `;
+                // KIỂM TRA NẾU ĐÚNG SĐT ADMIN THÌ BẬT NÚT ADMIN
+                if (cleanPhone(currentUser.soDienThoai) === cleanPhone(ADMIN_PHONE)) {
+                    adminBtnContainer.classList.remove('hidden');
+                } else {
+                    adminBtnContainer.classList.add('hidden');
+                }
             } else {
                 btnContainer.innerHTML = `
                     <button onclick="toggleModal('loginModal')" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
@@ -529,40 +554,70 @@
                         <span class="hidden sm:inline">Đăng nhập</span>
                     </button>
                 `;
+                adminBtnContainer.classList.add('hidden');
             }
             lucide.createIcons();
         }
 
         function handleUserLogin(e) {
             e.preventDefault();
-            const phone = document.getElementById('loginPhone').value.trim();
+            const phone = cleanPhone(document.getElementById('loginPhone').value);
+            const pass = document.getElementById('loginPass').value || '123456';
             const statusText = document.getElementById('loginStatus');
 
-            statusText.innerText = "Đang kiểm tra thông tin...";
+            statusText.innerText = "Đang kiểm tra đăng nhập...";
             statusText.classList.remove('hidden');
 
             fetch(`${GOOGLE_SCRIPT_URL}?action=getUser&soDienThoai=${phone}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.found) {
-                        currentUser = { soDienThoai: data.soDienThoai, tenKhach: data.tenKhach, diaChi: data.diaChi };
-                        localStorage.setItem('user_culan', JSON.stringify(currentUser));
-                        updateAccountUI();
-                        toggleModal('loginModal');
-                        alert(`Chào mừng ${currentUser.tenKhach || currentUser.soDienThoai} quay trở lại!`);
+                        if (data.matKhau && data.matKhau !== pass) {
+                            statusText.innerText = "❌ Mật khẩu không chính xác!";
+                            return;
+                        }
+                        currentUser = { soDienThoai: data.soDienThoai, tenKhach: data.tenKhach, diaChi: data.diaChi, matKhau: data.matKhau };
                     } else {
-                        currentUser = { soDienThoai: phone, tenKhach: "Khách mới", diaChi: "" };
-                        localStorage.setItem('user_culan', JSON.stringify(currentUser));
-                        updateAccountUI();
-                        toggleModal('loginModal');
-                        alert("Tài khoản mới đã được ghi nhận!");
+                        currentUser = { soDienThoai: phone, tenKhach: "Khách mới", diaChi: "", matKhau: pass };
+                        // Đăng ký tài khoản mới lên Google Sheet
+                        const formData = new URLSearchParams();
+                        formData.append('action', 'register');
+                        formData.append('soDienThoai', phone);
+                        formData.append('matKhau', pass);
+                        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData }).catch(err => {});
                     }
-                })
-                .catch(err => {
-                    currentUser = { soDienThoai: phone, tenKhach: "Khách hàng", diaChi: "" };
                     localStorage.setItem('user_culan', JSON.stringify(currentUser));
                     updateAccountUI();
                     toggleModal('loginModal');
+                    alert(`Đăng nhập thành công! Chào mừng ${currentUser.tenKhach || currentUser.soDienThoai}`);
+                })
+                .catch(err => {
+                    currentUser = { soDienThoai: phone, tenKhach: "Khách hàng", diaChi: "", matKhau: pass };
+                    localStorage.setItem('user_culan', JSON.stringify(currentUser));
+                    updateAccountUI();
+                    toggleModal('loginModal');
+                });
+        }
+
+        function handleChangePassword(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+            const newPass = document.getElementById('newPassInput').value;
+            const statusText = document.getElementById('changePassStatus');
+
+            const formData = new URLSearchParams();
+            formData.append('action', 'changePassword');
+            formData.append('soDienThoai', currentUser.soDienThoai);
+            formData.append('matKhauMoi', newPass);
+
+            fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(data => {
+                    currentUser.matKhau = newPass;
+                    localStorage.setItem('user_culan', JSON.stringify(currentUser));
+                    statusText.innerText = "✅ Đổi mật khẩu thành công!";
+                    statusText.classList.remove('hidden');
+                    setTimeout(() => { toggleModal('changePassModal'); statusText.classList.add('hidden'); }, 1500);
                 });
         }
 
@@ -577,7 +632,7 @@
             if (!currentUser) return;
             document.getElementById('userHistorySubText').innerText = `Tài khoản: ${currentUser.soDienThoai}`;
             const container = document.getElementById('historyContainer');
-            container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Đang tải lịch sử đơn hàng từ Google Sheet...</p>`;
+            container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Đang tải lịch sử đơn hàng...</p>`;
             toggleModal('historyModal');
 
             fetch(`${GOOGLE_SCRIPT_URL}?action=getHistory&soDienThoai=${currentUser.soDienThoai}`)
@@ -605,35 +660,11 @@
                 });
         }
 
-        // HÀM MỞ BẢNG QUẢN TRỊ ADMIN BẢO MẬT
         function openAdminDashboard() {
-            if (sessionStorage.getItem('is_admin_authenticated') === 'true') {
-                fetchAndShowAdminData();
-            } else {
-                document.getElementById('adminPinInput').value = '';
-                document.getElementById('adminPinError').classList.add('hidden');
-                toggleModal('adminLoginModal');
+            if (!currentUser || cleanPhone(currentUser.soDienThoai) !== cleanPhone(ADMIN_PHONE)) {
+                alert("Bạn không có quyền truy cập khu vực này!");
+                return;
             }
-        }
-
-        function verifyAdminPin(e) {
-            e.preventDefault();
-            const pin = document.getElementById('adminPinInput').value;
-            const errorText = document.getElementById('adminPinError');
-
-            // Mật khẩu Admin bảo mật (Anh có thể thay '8888' bằng mật khẩu riêng tùy ý)
-            const SECRET_ADMIN_PIN = "8888"; 
-
-            if (pin === SECRET_ADMIN_PIN) {
-                sessionStorage.setItem('is_admin_authenticated', 'true');
-                toggleModal('adminLoginModal');
-                fetchAndShowAdminData();
-            } else {
-                errorText.classList.remove('hidden');
-            }
-        }
-
-        function fetchAndShowAdminData() {
             toggleModal('adminModal');
             const sheetBody = document.getElementById('sheetTableBody');
             sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Đang tải dữ liệu thực tế từ Google Sheet...</td></tr>`;
@@ -843,7 +874,7 @@
         function handleOrderSubmit(e) {
             e.preventDefault();
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            finalizeSuccessfulOrder(paymentMethod === 'TRANSFER' ? 'Chuyển khoản QR' : 'Tiền mặt khi nhận hàng (COD)');
+            finalizeSuccessfulOrder(paymentStatus = paymentMethod === 'TRANSFER' ? 'Chuyển khoản QR' : 'Tiền mặt khi nhận hàng (COD)');
         }
 
         function finalizeSuccessfulOrder(paymentStatus) {
