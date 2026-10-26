@@ -85,10 +85,10 @@
                     </button>
                 </div>
 
-                <!-- Admin Simulation Button -->
-                <button onclick="toggleModal('adminModal')" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
+                <!-- Admin Dashboard Button -->
+                <button onclick="openAdminDashboard()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
                     <i data-lucide="database" class="w-4 h-4 text-emerald-600"></i>
-                    <span class="hidden sm:inline">Giả lập</span> Admin
+                    <span class="hidden sm:inline">Quản trị</span> Admin
                 </button>
 
                 <!-- Cart Button -->
@@ -379,12 +379,6 @@
                             <p>Nội dung CK: <strong id="qrMemo" class="text-amber-400 bg-slate-800 px-2 py-0.5 rounded font-mono">DH...</strong></p>
                             <p class="text-[11px] text-slate-400">Số tiền: <span id="qrAmount" class="font-bold text-white">0đ</span></p>
                         </div>
-                        <div class="pt-2 border-t border-slate-800">
-                            <button type="button" onclick="simulateBankWebhook()" class="w-full py-2 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-1.5">
-                                <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
-                                Mô Phỏng Nhanh Webhook Ngân Hàng (Test)
-                            </button>
-                        </div>
                     </div>
 
                     <div class="pt-2">
@@ -417,7 +411,7 @@
                     <p><strong>Thanh toán:</strong> <span id="succPaymentStatus" class="font-semibold text-emerald-600">-</span></p>
                     <p><strong>Tổng tiền:</strong> <span id="succTotalAmount" class="font-bold text-slate-900 text-sm">-</span></p>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed">Shop đã ghi nhận đơn của bạn vào <strong>Google Sheet</strong> và gửi thông báo tới <strong>Email Admin</strong>.</p>
+                <p class="text-xs text-slate-500 leading-relaxed">Shop đã ghi nhận đơn của bạn vào <strong>Google Sheet</strong> thành công.</p>
                 <button onclick="closeSuccessModal()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition-all">
                     Hoàn Tất & Về Trang Chủ
                 </button>
@@ -433,40 +427,27 @@
                 <div class="flex items-center justify-between pb-4 border-b border-slate-200">
                     <div>
                         <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i data-lucide="database" class="w-5 h-5 text-emerald-600"></i> Bảng Điều Khiển Giả Lập Admin
+                            <i data-lucide="database" class="w-5 h-5 text-emerald-600"></i> Trang Quản Trị Đơn Hàng (Google Sheets)
                         </h3>
                     </div>
                     <button onclick="toggleModal('adminModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
-                <div class="flex border-b border-slate-200 mt-4 text-xs font-bold">
-                    <button onclick="switchAdminTab('sheet')" id="tabBtnSheet" class="py-2.5 px-4 border-b-2 border-brand-600 text-brand-600 flex items-center gap-1.5"><i data-lucide="file-spreadsheet" class="w-4 h-4"></i> DonHang</button>
-                    <button onclick="switchAdminTab('telegram')" id="tabBtnTelegram" class="py-2.5 px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5"><i data-lucide="send" class="w-4 h-4"></i> Notification Log</button>
-                    <button onclick="switchAdminTab('products')" id="tabBtnProducts" class="py-2.5 px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5"><i data-lucide="package" class="w-4 h-4"></i> SanPham</button>
-                </div>
-                <div id="tabContentSheet" class="py-4 space-y-3">
-                    <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-80 custom-scrollbar">
+                <div class="py-4 space-y-3">
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-96 custom-scrollbar">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead class="bg-slate-100 text-slate-700 font-semibold sticky top-0">
                                 <tr>
-                                    <th class="p-2.5 border-b">Mã Đơn</th><th class="p-2.5 border-b">Thời Gian</th><th class="p-2.5 border-b">Khách Hàng</th><th class="p-2.5 border-b">SĐT</th><th class="p-2.5 border-b">Địa Chỉ</th><th class="p-2.5 border-b">Lịch Giao</th><th class="p-2.5 border-b">Tổng Tiền</th><th class="p-2.5 border-b">Thanh Toán</th>
+                                    <th class="p-2.5 border-b">Mã Đơn</th>
+                                    <th class="p-2.5 border-b">Thời Gian</th>
+                                    <th class="p-2.5 border-b">Khách Hàng</th>
+                                    <th class="p-2.5 border-b">SĐT</th>
+                                    <th class="p-2.5 border-b">Địa Chỉ</th>
+                                    <th class="p-2.5 border-b">Lịch Giao</th>
+                                    <th class="p-2.5 border-b">Tổng Tiền</th>
+                                    <th class="p-2.5 border-b">Thanh Toán</th>
                                 </tr>
                             </thead>
                             <tbody id="sheetTableBody" class="divide-y divide-slate-200 text-slate-800"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div id="tabContentTelegram" class="py-4 hidden">
-                    <div class="bg-slate-900 rounded-xl p-4 font-mono text-xs text-emerald-400 space-y-4 max-h-80 overflow-y-auto custom-scrollbar" id="telegramLogContainer"></div>
-                </div>
-                <div id="tabContentProducts" class="py-4 hidden">
-                    <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-80 custom-scrollbar">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead class="bg-slate-100 text-slate-700 font-semibold sticky top-0">
-                                <tr>
-                                    <th class="p-2.5 border-b">ID</th><th class="p-2.5 border-b">Tên Sản Phẩm</th><th class="p-2.5 border-b">Danh Mục</th><th class="p-2.5 border-b">Đơn Vị</th><th class="p-2.5 border-b">Giá Niêm Yết</th><th class="p-2.5 border-b">Đặc Tính</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productTableBody" class="divide-y divide-slate-200 text-slate-800"></tbody>
                         </table>
                     </div>
                 </div>
@@ -541,18 +522,15 @@
 
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('cart_culan')) || [];
-        let orders = JSON.parse(localStorage.getItem('orders_culan')) || [];
         let currentUser = JSON.parse(localStorage.getItem('user_culan')) || null;
         let currentCheckoutOrderId = null;
         let currentCheckoutTotal = 0;
-        let paymentCheckInterval = null;
         let customerGPS = "";
 
         window.addEventListener('DOMContentLoaded', () => {
             renderCategories();
             renderProducts();
             updateCartUI();
-            renderAdminData();
             updateAccountUI();
             lucide.createIcons();
         });
@@ -584,7 +562,6 @@
         function handleUserLogin(e) {
             e.preventDefault();
             const phone = document.getElementById('loginPhone').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
             const statusText = document.getElementById('loginStatus');
 
             statusText.innerText = "Đang kiểm tra thông tin...";
@@ -600,12 +577,11 @@
                         toggleModal('loginModal');
                         alert(`Chào mừng ${currentUser.tenKhach || currentUser.soDienThoai} quay trở lại!`);
                     } else {
-                        // Tạo tài khoản mới tạm thời
                         currentUser = { soDienThoai: phone, tenKhach: "Khách mới", diaChi: "" };
                         localStorage.setItem('user_culan', JSON.stringify(currentUser));
                         updateAccountUI();
                         toggleModal('loginModal');
-                        alert("Tài khoản mới đã được tạo! Thông tin sẽ tự động lưu sau lần mua hàng đầu tiên.");
+                        alert("Tài khoản mới đã được ghi nhận!");
                     }
                 })
                 .catch(err => {
@@ -652,6 +628,37 @@
                             </div>
                         `).join('');
                     }
+                });
+        }
+
+        function openAdminDashboard() {
+            toggleModal('adminModal');
+            const sheetBody = document.getElementById('sheetTableBody');
+            sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Đang tải dữ liệu thực tế từ Google Sheet...</td></tr>`;
+
+            fetch(`${GOOGLE_SCRIPT_URL}?action=getAllOrders`)
+                .then(res => res.json())
+                .then(data => {
+                    const list = data.orders || [];
+                    if (list.length === 0) {
+                        sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">Chưa có đơn hàng nào trên hệ thống!</td></tr>`;
+                        return;
+                    }
+                    sheetBody.innerHTML = list.map(o => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2.5 font-bold font-mono text-brand-600 border-b">#${o.maDon}</td>
+                            <td class="p-2.5 text-slate-500 border-b">${o.thoiGian}</td>
+                            <td class="p-2.5 font-medium border-b">${o.tenKhach}</td>
+                            <td class="p-2.5 border-b">${o.soDienThoai}</td>
+                            <td class="p-2.5 text-slate-700 border-b">${o.diaChi}</td>
+                            <td class="p-2.5 font-semibold text-slate-700 border-b">${o.lichGiao}</td>
+                            <td class="p-2.5 font-bold border-b">${formatVND(o.tongTien)}</td>
+                            <td class="p-2.5 border-b"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${o.thanhToan}</span></td>
+                        </tr>
+                    `).join('');
+                })
+                .catch(err => {
+                    sheetBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-red-500">Lỗi kết nối tới Google Sheet!</td></tr>`;
                 });
         }
 
@@ -805,7 +812,6 @@
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             currentCheckoutTotal = subtotal + (subtotal >= 300000 ? 0 : 30000);
 
-            // Tự động điền thông tin nếu khách đã từng Đăng nhập
             if (currentUser) {
                 if (currentUser.tenKhach) document.getElementById('custName').value = currentUser.tenKhach;
                 if (currentUser.soDienThoai) document.getElementById('custPhone').value = currentUser.soDienThoai;
@@ -818,7 +824,6 @@
         function togglePaymentUI(method) {
             const qrContainer = document.getElementById('qrContainer');
             const submitBtn = document.getElementById('submitOrderBtn');
-            if (paymentCheckInterval) clearInterval(paymentCheckInterval);
 
             if (method === 'TRANSFER') {
                 qrContainer.classList.remove('hidden');
@@ -827,7 +832,6 @@
                 document.getElementById('vietQrImage').src = qrUrl;
                 document.getElementById('qrMemo').innerText = currentCheckoutOrderId;
                 document.getElementById('qrAmount').innerText = formatVND(currentCheckoutTotal);
-                sendOrderToSheetSilently('Chuyển khoản QR (Chờ đối soát)');
             } else {
                 qrContainer.classList.add('hidden');
                 submitBtn.innerText = "Xác Nhận Đặt Hàng (Thanh Toán COD)";
@@ -840,7 +844,7 @@
             finalizeSuccessfulOrder(paymentMethod === 'TRANSFER' ? 'Chuyển khoản QR' : 'Tiền mặt khi nhận hàng (COD)');
         }
 
-        function sendOrderToSheetSilently(paymentStatus) {
+        function finalizeSuccessfulOrder(paymentStatus) {
             if (!currentCheckoutOrderId) currentCheckoutOrderId = 'DH' + Math.floor(1000 + Math.random() * 9000);
             const name = document.getElementById('custName').value || "Khách hàng";
             const phone = document.getElementById('custPhone').value || "0000";
@@ -851,7 +855,6 @@
             const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked')?.value || "Sáng Thứ 7";
             const chiTietChuoi = cart.map(item => `${item.quantity}x ${item.name}`).join(", ");
 
-            // Tự cập nhật tài khoản người dùng vào bộ nhớ
             currentUser = { soDienThoai: phone, tenKhach: name, diaChi: street };
             localStorage.setItem('user_culan', JSON.stringify(currentUser));
             updateAccountUI();
@@ -867,76 +870,22 @@
             formData.append('chiTietChuoi', chiTietChuoi);
 
             fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData }).catch(err => console.log(err));
-        }
 
-        function finalizeSuccessfulOrder(paymentStatus) {
-            sendOrderToSheetSilently(paymentStatus);
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const street = document.getElementById('custStreet').value;
-            const ward = document.getElementById('custWard').value;
-            let address = `${street}, ${ward}`;
-            const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked').value;
-
-            const order = {
-                id: currentCheckoutOrderId,
-                timestamp: new Date().toLocaleString('vi-VN'),
-                customerName: name, phone: phone, address: address, deliveryTime: deliveryTime, items: [...cart], totalAmount: currentCheckoutTotal, paymentStatus: paymentStatus
-            };
-
-            orders.unshift(order);
-            localStorage.setItem('orders_culan', JSON.stringify(orders));
             cart = []; saveCart(); updateCartUI();
             toggleModal('checkoutModal');
 
-            document.getElementById('successOrderId').innerText = '#' + order.id;
-            document.getElementById('succCustName').innerText = order.customerName;
-            document.getElementById('succCustPhone').innerText = order.phone;
-            document.getElementById('succCustAddress').innerText = order.address;
-            document.getElementById('succDeliveryTime').innerText = order.deliveryTime;
-            document.getElementById('succPaymentStatus').innerText = order.paymentStatus;
-            document.getElementById('succTotalAmount').innerText = formatVND(order.totalAmount);
+            document.getElementById('successOrderId').innerText = '#' + currentCheckoutOrderId;
+            document.getElementById('succCustName').innerText = name;
+            document.getElementById('succCustPhone').innerText = phone;
+            document.getElementById('succCustAddress').innerText = address;
+            document.getElementById('succDeliveryTime').innerText = deliveryTime;
+            document.getElementById('succPaymentStatus').innerText = paymentStatus;
+            document.getElementById('succTotalAmount').innerText = formatVND(currentCheckoutTotal);
 
             toggleModal('successModal');
-            renderAdminData();
         }
 
         function closeSuccessModal() { toggleModal('successModal'); }
-
-        function renderAdminData() {
-            const sheetBody = document.getElementById('sheetTableBody');
-            sheetBody.innerHTML = orders.map(o => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-2.5 font-bold font-mono text-brand-600 border-b">#${o.id}</td>
-                    <td class="p-2.5 text-slate-500 border-b">${o.timestamp}</td>
-                    <td class="p-2.5 font-medium border-b">${o.customerName}</td>
-                    <td class="p-2.5 border-b">${o.phone}</td>
-                    <td class="p-2.5 text-slate-700 border-b">${o.address}</td>
-                    <td class="p-2.5 font-semibold text-slate-700 border-b">${o.deliveryTime}</td>
-                    <td class="p-2.5 font-bold border-b">${formatVND(o.totalAmount)}</td>
-                    <td class="p-2.5 border-b"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${o.paymentStatus}</span></td>
-                </tr>
-            `).join('');
-
-            const prodBody = document.getElementById('productTableBody');
-            const productList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
-            prodBody.innerHTML = productList.map(p => `
-                <tr>
-                    <td class="p-2.5 font-mono text-slate-500 border-b">${p.id}</td>
-                    <td class="p-2.5 font-bold border-b">${p.name}</td>
-                    <td class="p-2.5 text-slate-500 border-b">${p.category}</td>
-                    <td class="p-2.5 border-b">${p.unit}</td>
-                    <td class="p-2.5 font-bold text-brand-600 border-b">${formatVND(p.price)}</td>
-                    <td class="p-2.5 border-b">${p.heavy ? '📦 Nặng' : 'Gọn'}</td>
-                </tr>
-            `).join('');
-        }
-
-        function switchAdminTab(tab) {
-            document.getElementById('tabContentSheet').classList.toggle('hidden', tab !== 'sheet');
-            document.getElementById('tabContentTelegram').classList.toggle('hidden', tab !== 'telegram');
-            document.getElementById('tabContentProducts').classList.toggle('hidden', tab !== 'products');
-        }
 
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
