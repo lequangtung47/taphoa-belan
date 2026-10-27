@@ -31,6 +31,7 @@ async function fetchProductsFromSheet() {
                         name: cleanRow.name ? cleanRow.name.trim() : '',
                         category: cleanRow.category ? cleanRow.category.trim() : '',
                         price: Number(cleanRow.price) || 0,
+                        originalPrice: Number(cleanRow.originalPrice) || 0, // 👈 Bổ sung thêm dòng này để lấy giá gốc từ Sheet
                         unit: cleanRow.unit ? cleanRow.unit.trim() : '',
                         heavy: cleanRow.heavy === 'TRUE' || cleanRow.heavy === 'true' || cleanRow.heavy === '1',
                         image: cleanRow.image ? cleanRow.image.trim() : '',
