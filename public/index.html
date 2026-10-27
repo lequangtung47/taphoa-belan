@@ -19,6 +19,15 @@
                             700: '#15803d',
                             800: '#166534',
                         }
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        }
+                    },
+                    animation: {
+                        marquee: 'marquee 25s linear infinite'
                     }
                 }
             }
@@ -31,39 +40,40 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .marquee-container:hover .animate-marquee { animation-play-state: paused; }
     </style>
 </head>
 <body class="flex flex-col min-h-full text-slate-800">
 
     <!-- TOP ANNOUNCEMENT BANNER -->
-    <div class="bg-gradient-to-r from-emerald-700 via-brand-600 to-teal-700 text-white text-xs md:text-sm py-2.5 px-4 shadow-sm relative z-30">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
-            <div class="flex items-center gap-2 font-medium">
-                <span class="inline-flex items-center rounded-full bg-emerald-500/30 px-2 py-0.5 text-xs font-semibold text-emerald-100 ring-1 ring-inset ring-emerald-400/30">
-                    <i data-lucide="clock" class="w-3.5 h-3.5 mr-1 inline"></i> Lịch Vận Hành
+    <div class="bg-gradient-to-r from-emerald-700 via-brand-600 to-teal-700 text-white text-xs py-2 px-3 shadow-sm relative z-30">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center sm:text-left">
+            <div class="flex items-center gap-2 font-medium justify-center sm:justify-start">
+                <span class="inline-flex items-center rounded-full bg-emerald-500/30 px-2 py-0.5 text-[11px] font-semibold text-emerald-100 ring-1 ring-inset ring-emerald-400/30">
+                    <i data-lucide="clock" class="w-3 h-3 mr-1 inline"></i> Lịch Vận Hành
                 </span>
-                <span>Chốt đơn T2 - T6 | Giao tận nhà Thứ 7 & Chủ Nhật (Freeship đơn từ 300K)</span>
+                <span class="text-[11px] sm:text-xs">Chốt đơn T2 - T6 | Giao tận nhà T7 & CN (Freeship đơn từ 300K)</span>
             </div>
-            <div class="flex items-center gap-3 text-xs opacity-90">
-                <span class="hidden md:inline"><i data-lucide="shield-check" class="w-3.5 h-3.5 inline mr-1"></i>Đổi trả tận nơi</span>
+            <div class="flex items-center gap-3 text-[11px] opacity-90 justify-center">
+                <span class="hidden md:inline"><i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>Đổi trả tận nơi</span>
                 <span class="hidden md:inline">•</span>
-                <span><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1"></i>Hotline/Zalo: 0905.123.456</span>
+                <span><i data-lucide="phone" class="w-3 h-3 inline mr-1"></i>Hotline/Zalo: 0905.123.456</span>
             </div>
         </div>
     </div>
 
     <!-- MAIN NAVBAR -->
     <header class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-slate-200 z-20 shadow-sm">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
             
             <!-- Logo -->
             <a href="#" class="flex items-center gap-2 group shrink-0">
-                <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform shrink-0">
-                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform shrink-0">
+                    <i data-lucide="shopping-bag" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </div>
                 <div class="min-w-0">
-                    <span class="font-bold text-sm sm:text-lg leading-tight text-slate-900 block truncate">Tạp Hóa <span class="text-brand-600">Bé Lan</span></span>
-                    <span class="text-[9px] text-slate-500 font-medium tracking-wide uppercase block -mt-0.5 truncate">Gom đơn - Giao T7/CN</span>
+                    <span class="font-bold text-xs sm:text-base leading-tight text-slate-900 block truncate">Tạp Hóa <span class="text-brand-600">Bé Lan</span></span>
+                    <span class="text-[8px] sm:text-[10px] text-slate-500 font-medium tracking-wide uppercase block -mt-0.5 truncate">Gom đơn - Giao T7/CN</span>
                 </div>
             </a>
 
@@ -80,12 +90,12 @@
                 <!-- Account / History Button -->
                 <div id="accountNavBtn">
                     <button onclick="toggleModal('loginModal')" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
-                        <i data-lucide="user" class="w-4 h-4 text-brand-600"></i>
+                        <i data-lucide="user" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-600"></i>
                         <span class="hidden sm:inline">Đăng nhập</span>
                     </button>
                 </div>
 
-                <!-- Admin Dashboard Button (Tự động ẩn/hiện tùy tài khoản) -->
+                <!-- Admin Dashboard Button -->
                 <div id="adminNavBtn" class="hidden">
                     <button onclick="openAdminDashboard()" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm">
                         <i data-lucide="shield" class="w-3.5 h-3.5"></i>
@@ -95,7 +105,7 @@
                 </div>
 
                 <!-- Cart Button -->
-                <button onclick="toggleCartModal()" class="relative flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium text-xs sm:text-sm rounded-xl transition-all shadow-md shadow-brand-600/20 active:scale-95">
+                <button onclick="toggleCartModal()" class="relative flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3.5 sm:py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium text-xs sm:text-sm rounded-xl transition-all shadow-md shadow-brand-600/20 active:scale-95">
                     <i data-lucide="shopping-cart" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     <span class="hidden sm:inline">Giỏ hàng</span>
                     <span id="cartBadge" class="bg-amber-400 text-slate-900 font-bold text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
@@ -104,66 +114,53 @@
         </div>
 
         <!-- Search Bar Mobile -->
-        <div class="px-3 pb-3 md:hidden">
+        <div class="px-3 pb-2.5 md:hidden">
             <div class="relative">
                 <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Tìm nước giặt, bia, đồ cồng kềnh..." 
-                    class="w-full pl-9 pr-4 py-2 bg-slate-100 focus:bg-white border border-slate-200 focus:border-brand-500 rounded-xl text-xs outline-none">
-                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                    class="w-full pl-9 pr-4 py-1.5 bg-slate-100 focus:bg-white border border-slate-200 focus:border-brand-500 rounded-xl text-xs outline-none">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2 text-slate-400"></i>
             </div>
         </div>
     </header>
 
-    <!-- HERO / PROMO SECTION -->
-    <section class="bg-gradient-to-b from-emerald-50 to-slate-50 py-6 border-b border-slate-200/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3.5">
-                    <div class="p-3 bg-emerald-100 text-emerald-700 rounded-xl shrink-0">
-                        <i data-lucide="truck" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Giao Hàng Tận Nhà T7 - CN</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Đặt trước từ T2-T6, thong thả nhận hàng đúng khung giờ cuối tuần.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3.5">
-                    <div class="p-3 bg-blue-100 text-blue-700 rounded-xl shrink-0">
-                        <i data-lucide="package-check" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Chuyên Đồ Nặng & Cồng Kềnh</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Gạo thùng, bia nguyên ca, nước giặt 3.6kg... Không lo mang vác nặng!</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3.5">
-                    <div class="p-3 bg-amber-100 text-amber-700 rounded-xl shrink-0">
-                        <i data-lucide="qr-code" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">VietQR Auto Check</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Thanh toán mượt mà, hệ thống tự động xác nhận qua payOS.</p>
-                    </div>
-                </div>
+    <!-- PROMO MARQUEE TICKER (GỌN GÀNG 1 DÒNG CHẠY NGANG) -->
+    <section class="bg-emerald-900 text-emerald-100 py-2 border-b border-emerald-800 overflow-hidden relative z-10 marquee-container">
+        <div class="flex whitespace-nowrap animate-marquee">
+            <!-- Dãy 1 -->
+            <div class="flex items-center gap-8 px-4 text-xs font-medium">
+                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Giao Hàng Tận Nhà T7 - CN: Đặt trước T2-T6, thong thả nhận hàng cuối tuần.</span>
+                <span class="text-emerald-700">•</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo thùng, bia, nước giặt 3.6kg... Không lo mang vác!</span>
+                <span class="text-emerald-700">•</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> VietQR Auto Check: Thanh toán mượt mà, xác nhận tự động qua payOS.</span>
+                <span class="text-emerald-700">•</span>
+            </div>
+            <!-- Dãy 2 (Lặp lại để tạo hiệu ứng mượt không ngắt quãng) -->
+            <div class="flex items-center gap-8 px-4 text-xs font-medium">
+                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Giao Hàng Tận Nhà T7 - CN: Đặt trước T2-T6, thong thả nhận hàng cuối tuần.</span>
+                <span class="text-emerald-700">•</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo thùng, bia, nước giặt 3.6kg... Không lo mang vác!</span>
+                <span class="text-emerald-700">•</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> VietQR Auto Check: Thanh toán mượt mà, xác nhận tự động qua payOS.</span>
+                <span class="text-emerald-700">•</span>
             </div>
         </div>
     </section>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-8">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <i data-lucide="layout-grid" class="w-5 h-5 text-brand-600"></i> Danh Mục Bách Hóa
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-6">
+        <div class="mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-base sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i data-lucide="layout-grid" class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600"></i> Danh Mục Bách Hóa
                 </h2>
                 <span class="text-xs text-slate-500 font-medium" id="productCountText">Hiển thị 0 sản phẩm</span>
             </div>
 
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0" id="categoryContainer"></div>
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar -mx-3 px-3 sm:mx-0 sm:px-0" id="categoryContainer"></div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6" id="productGrid"></div>
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6" id="productGrid"></div>
     </main>
 
     <!-- FOOTER -->
@@ -582,12 +579,11 @@
 
             if (currentUser) {
                 btnContainer.innerHTML = `
-                    <button onclick="openUserHistory()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-xl transition-colors border border-brand-200">
-                        <i data-lucide="user-check" class="w-4 h-4 text-brand-600"></i>
-                        <span>${currentUser.tenKhach || currentUser.soDienThoai}</span>
+                    <button onclick="openUserHistory()" class="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-xl transition-colors border border-brand-200">
+                        <i data-lucide="user-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-600"></i>
+                        <span class="max-w-[70px] sm:max-w-none truncate">${currentUser.tenKhach || currentUser.soDienThoai}</span>
                     </button>
                 `;
-                // KIỂM TRA NẾU ĐÚNG SĐT ADMIN THÌ BẬT NÚT ADMIN
                 if (cleanPhone(currentUser.soDienThoai) === cleanPhone(ADMIN_PHONE)) {
                     adminBtnContainer.classList.remove('hidden');
                 } else {
@@ -595,8 +591,8 @@
                 }
             } else {
                 btnContainer.innerHTML = `
-                    <button onclick="toggleModal('loginModal')" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
-                        <i data-lucide="user" class="w-4 h-4 text-brand-600"></i>
+                    <button onclick="toggleModal('loginModal')" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors border border-slate-200">
+                        <i data-lucide="user" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-600"></i>
                         <span class="hidden sm:inline">Đăng nhập</span>
                     </button>
                 `;
@@ -625,7 +621,6 @@
                         currentUser = { soDienThoai: data.soDienThoai, tenKhach: data.tenKhach, diaChi: data.diaChi, matKhau: data.matKhau };
                     } else {
                         currentUser = { soDienThoai: phone, tenKhach: "Khách mới", diaChi: "", matKhau: pass };
-                        // Đăng ký tài khoản mới lên Google Sheet
                         const formData = new URLSearchParams();
                         formData.append('action', 'register');
                         formData.append('soDienThoai', phone);
@@ -779,7 +774,7 @@
             const container = document.getElementById('categoryContainer');
             container.innerHTML = CATEGORIES.map(cat => `
                 <button onclick="setCategory('${cat.id}')" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${currentCategory === cat.id ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
+                    class="px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${currentCategory === cat.id ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
                     <span>${cat.name}</span>
                 </button>
             `).join('');
@@ -787,7 +782,7 @@
 
         function setCategory(catId) { currentCategory = catId; renderCategories(); renderProducts(); }
 
-       function renderProducts() {
+        function renderProducts() {
             const searchVal = (document.getElementById('searchInput').value || document.getElementById('searchInputMobile').value || '').toLowerCase();
             const grid = document.getElementById('productGrid');
             const productList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
@@ -804,7 +799,7 @@
             }
 
             grid.innerHTML = filtered.map(p => {
-                // p.price là giá sau giảm, p.originalPrice là giá gốc từ Google Sheets
+                // p.price là giá sau giảm, p.originalPrice là giá gốc
                 const hasDiscount = p.originalPrice && p.originalPrice > p.price;
                 const discountPercent = hasDiscount ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
 
@@ -813,10 +808,8 @@
                         <div class="relative bg-slate-100 aspect-square overflow-hidden">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             
-                            <!-- Nhãn đồ nặng -->
                             ${p.heavy ? `<span class="absolute top-2 left-2 bg-amber-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">Đồ nặng</span>` : ''}
                             
-                            <!-- Huy hiệu % Giảm giá tự động tính -->
                             ${hasDiscount ? `<span class="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">-${discountPercent}%</span>` : ''}
                         </div>
 
@@ -842,6 +835,7 @@
             }).join('');
             lucide.createIcons();
         }
+
         function syncMobileSearch() { document.getElementById('searchInput').value = document.getElementById('searchInputMobile').value; renderProducts(); }
 
         function addToCart(productId) {
@@ -935,7 +929,7 @@
         function handleOrderSubmit(e) {
             e.preventDefault();
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            finalizeSuccessfulOrder(paymentStatus = paymentMethod === 'TRANSFER' ? 'Chuyển khoản QR' : 'Tiền mặt khi nhận hàng (COD)');
+            finalizeSuccessfulOrder(paymentMethod === 'TRANSFER' ? 'Chuyển khoản QR' : 'Tiền mặt khi nhận hàng (COD)');
         }
 
         function finalizeSuccessfulOrder(paymentStatus) {
@@ -948,8 +942,6 @@
             if (customerGPS) address += ` [${customerGPS}]`;
             const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked')?.value || "Sáng Thứ 7";
             const chiTietChuoi = cart.map(item => `${item.quantity}x ${item.name}`).join(", ");
-
-            // 🛑 LƯU Ý: Không gán currentUser hay lưu localStorage ở đây nữa để tránh tự động đăng nhập khi chưa có mật khẩu!
 
             const formData = new URLSearchParams();
             formData.append('maDon', currentCheckoutOrderId);
