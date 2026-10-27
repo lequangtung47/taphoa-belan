@@ -495,13 +495,6 @@
         const ADMIN_PHONE = '0867676416';
 
         // Khớp chính xác tên category tiếng Việt trong Google Sheet của anh
-        const CATEGORIES = [
-            { id: 'all', name: 'Tất Cả' },
-            { id: 'Bia & Đồ Uống', name: 'Bia & Đồ Uống' },
-            { id: 'Giặt Xả & Nhà Cửa', name: 'Giặt Xả & Nhà Cửa' },
-            { id: 'Gia Vị & Bếp', name: 'Gia Vị & Bếp' },
-            { id: 'Gạo & Thực Phẩm Khô', name: 'Gạo & Thực Phẩm Khô' }
-        ];
 
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('cart_culan')) || [];
@@ -728,14 +721,29 @@
 
         function renderCategories() {
             const container = document.getElementById('categoryContainer');
-            container.innerHTML = CATEGORIES.map(cat => `
+            const productList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
+            
+            // 1. Tự động gom tất cả danh mục thực tế từ Google Sheet (loại bỏ trùng lặp và ô trống)
+            const sheetCategories = [...new Set(
+                productList
+                    .map(p => (p.category || '').trim())
+                    .filter(cat => cat.length > 0)
+            )];
+
+            // 2. Tạo danh sách bao gồm nút "Tất Cả" + các danh mục tự động từ Google Sheet
+            const dynamicCategories = [
+                { id: 'all', name: 'Tất Cả' },
+                ...sheetCategories.map(cat => ({ id: cat, name: cat }))
+            ];
+
+            // 3. Render ra giao diện
+            container.innerHTML = dynamicCategories.map(cat => `
                 <button onclick="setCategory('${cat.id}')" 
                     class="px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${currentCategory === cat.id ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
                     <span>${cat.name}</span>
                 </button>
             `).join('');
         }
-
         function setCategory(catId) { currentCategory = catId; renderCategories(); renderProducts(); }
 
         function renderProducts() {
