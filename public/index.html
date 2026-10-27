@@ -939,9 +939,7 @@
             const deliveryTime = document.querySelector('input[name="deliveryTime"]:checked')?.value || "Sáng Thứ 7";
             const chiTietChuoi = cart.map(item => `${item.quantity}x ${item.name}`).join(", ");
 
-            currentUser = { soDienThoai: phone, tenKhach: name, diaChi: street };
-            localStorage.setItem('user_culan', JSON.stringify(currentUser));
-            updateAccountUI();
+            // 🛑 LƯU Ý: Không gán currentUser hay lưu localStorage ở đây nữa để tránh tự động đăng nhập khi chưa có mật khẩu!
 
             const formData = new URLSearchParams();
             formData.append('maDon', currentCheckoutOrderId);
