@@ -6,6 +6,11 @@ const csv = require('csv-parser');
 // Link export CSV trực tiếp từ Google Sheet của anh
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1G2OEe6Un6xms2vGLjhOqeQn8wTBx5AGSPU0nrcUwn6s/export?format=csv&gid=0';
 
+function formatVND(amount) {
+    if (!amount) return '0đ';
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+}
+
 async function fetchProductsFromSheet() {
     const response = await fetch(SHEET_CSV_URL);
     if (!response.ok) {
@@ -31,7 +36,7 @@ async function fetchProductsFromSheet() {
                         name: cleanRow.name ? cleanRow.name.trim() : '',
                         category: cleanRow.category ? cleanRow.category.trim() : '',
                         price: Number(cleanRow.price) || 0,
-                        originalPrice: Number(cleanRow.originalPrice) || 0, // 👈 Bổ sung thêm dòng này để lấy giá gốc từ Sheet
+                        originalPrice: Number(cleanRow.originalPrice) || 0,
                         unit: cleanRow.unit ? cleanRow.unit.trim() : '',
                         heavy: cleanRow.heavy === 'TRUE' || cleanRow.heavy === 'true' || cleanRow.heavy === '1',
                         image: cleanRow.image ? cleanRow.image.trim() : '',
@@ -51,24 +56,50 @@ async function buildSite() {
 
         console.log(`📦 Đã tải thành công ${products.length} sản phẩm!`);
 
-        // Lưu bản backup vào thư mục data
+        // 1. Lưu bản backup vào thư mục data
         const dataDir = path.join(__dirname, 'data');
         if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
         fs.writeFileSync(path.join(dataDir, 'products.json'), JSON.stringify(products, null, 2), 'utf8');
 
-        // Đọc template HTML gốc
+        // 2. Đọc template HTML gốc và tạo TRANG CHỦ (public/index.html)
         let template = fs.readFileSync(path.join(__dirname, 'src/template.html'), 'utf8');
-
-        // Inject dữ liệu sản phẩm vào template
         const injectedScript = `<script>const PRODUCTS = ${JSON.stringify(products, null, 2)};</script>`;
         const finalHtml = template.replace('<!-- INJECT_PRODUCTS_HERE -->', injectedScript);
 
-        // Ghi file kết quả ra thư mục public
         const publicDir = path.join(__dirname, 'public');
         if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir);
         fs.writeFileSync(path.join(publicDir, 'index.html'), finalHtml, 'utf8');
 
-        // Copy file app.js sang thư mục public/js
+        // 3. TẠO CÁC TRANG CHI TIẾT SẢN PHẨM RIÊNG BIỆT (public/products/[id].html)
+        const productsDir = path.join(publicDir, 'products');
+        if (!fs.existsSync(productsDir)) fs.mkdirSync(productsDir, { recursive: true });
+
+        const detailTemplatePath = path.join(__dirname, 'src/product-detail-template.html');
+        if (fs.existsSync(detailTemplatePath)) {
+            const detailTemplate = fs.readFileSync(detailTemplatePath, 'utf8');
+
+            products.forEach(p => {
+                const hasDiscount = p.originalPrice && p.originalPrice > p.price;
+                const discountPercent = hasDiscount ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+
+                let productHtml = detailTemplate
+                    .replace(/{{PRODUCT_ID}}/g, p.id)
+                    .replace(/{{PRODUCT_NAME}}/g, p.name)
+                    .replace(/{{PRODUCT_IMAGE}}/g, p.image)
+                    .replace(/{{PRODUCT_UNIT}}/g, p.unit || 'Cái')
+                    .replace(/{{PRODUCT_PRICE}}/g, formatVND(p.price))
+                    .replace(/{{PRODUCT_DESC}}/g, p.description || 'Chưa có mô tả cho sản phẩm này.')
+                    .replace(/{{PRODUCT_JSON}}/g, JSON.stringify(p))
+                    .replace(/{{HEAVY_BADGE}}/g, p.heavy ? `<span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">📦 Đồ nặng / cồng kềnh</span>` : '')
+                    .replace(/{{DISCOUNT_BADGE}}/g, hasDiscount ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">-${discountPercent}%</span>` : '')
+                    .replace(/{{ORIGINAL_PRICE_HTML}}/g, hasDiscount ? `<span class="text-base text-slate-400 line-through">${formatVND(p.originalPrice)}</span>` : '');
+
+                fs.writeFileSync(path.join(productsDir, `${p.id}.html`), productHtml, 'utf8');
+            });
+            console.log(`🛍️ Đã sinh thành công ${products.length} trang HTML sản phẩm riêng biệt trong public/products/!`);
+        }
+
+        // 4. Copy file app.js sang thư mục public/js
         const publicJsDir = path.join(publicDir, 'js');
         if (!fs.existsSync(publicJsDir)) fs.mkdirSync(publicJsDir, { recursive: true });
         
@@ -79,7 +110,7 @@ async function buildSite() {
             console.log('✅ Đã copy app.js sang public/js/app.js!');
         }
 
-        // Tự động copy toàn bộ thư mục images sang public/images
+        // 5. Tự động copy toàn bộ thư mục images sang public/images
         const srcImagesDir = path.join(__dirname, 'images');
         const destImagesDir = path.join(publicDir, 'images');
         if (fs.existsSync(srcImagesDir)) {
@@ -92,7 +123,7 @@ async function buildSite() {
             console.log('🖼️ Đã copy thành công toàn bộ hình ảnh sang public/images!');
         }
 
-        console.log('✅ Đã build thành công toàn bộ website!');
+        console.log('🎉 Đã build thành công toàn bộ website!');
     } catch (error) {
         console.error('❌ Lỗi khi build website:', error.message);
     }
