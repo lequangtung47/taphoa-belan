@@ -484,21 +484,7 @@
             </div>
         </div>
     </div>
-<!-- MODAL CHI TIẾT SẢN PHẨM -->
-    <div id="productDetailModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog">
-        <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeProductDetail()"></div>
-            <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 relative z-10 shadow-2xl my-8 overflow-hidden">
-                <button onclick="closeProductDetail()" class="absolute top-4 right-4 z-20 w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-                
-                <div id="productDetailContent" class="space-y-4">
-                    <!-- Nội dung chi tiết sản phẩm sẽ được render động bằng JavaScript -->
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- INJECT PRODUCTS FROM NODE BUILD -->
     <script>const PRODUCTS = [
   {
@@ -553,8 +539,6 @@
         // 🔑 SỐ ĐIỆN THOẠI ADMIN CỦA ANH
         const ADMIN_PHONE = '0867676416';
 
-        // Khớp chính xác tên category tiếng Việt trong Google Sheet của anh
-
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('cart_culan')) || [];
         let currentUser = JSON.parse(localStorage.getItem('user_culan')) || null;
@@ -568,6 +552,12 @@
             updateCartUI();
             updateAccountUI();
             lucide.createIcons();
+
+            // Tự động mở giỏ hàng nếu khách bấm mua từ trang chi tiết sản phẩm quay về
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('openCart') === 'true') {
+                toggleCartModal();
+            }
         });
 
         function formatVND(amount) {
@@ -782,20 +772,17 @@
             const container = document.getElementById('categoryContainer');
             const productList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
             
-            // 1. Tự động gom tất cả danh mục thực tế từ Google Sheet (loại bỏ trùng lặp và ô trống)
             const sheetCategories = [...new Set(
                 productList
                     .map(p => (p.category || '').trim())
                     .filter(cat => cat.length > 0)
             )];
 
-            // 2. Tạo danh sách bao gồm nút "Tất Cả" + các danh mục tự động từ Google Sheet
             const dynamicCategories = [
                 { id: 'all', name: 'Tất Cả' },
                 ...sheetCategories.map(cat => ({ id: cat, name: cat }))
             ];
 
-            // 3. Render ra giao diện
             container.innerHTML = dynamicCategories.map(cat => `
                 <button onclick="setCategory('${cat.id}')" 
                     class="px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${currentCategory === cat.id ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
@@ -811,7 +798,6 @@
             const productList = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
             
             const filtered = productList.filter(p => {
-                // So sánh linh hoạt không phân biệt hoa thường / khoảng trắng thừa giữa danh mục nút bấm và Google Sheet
                 const pCat = (p.category || '').toLowerCase().trim();
                 const curCat = currentCategory.toLowerCase().trim();
                 const matchesCat = currentCategory === 'all' || pCat === curCat;
@@ -835,18 +821,20 @@
 
                 return `
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden group">
-                        <div class="relative bg-slate-100 aspect-square overflow-hidden">
+                        <!-- Click mở trang chi tiết sản phẩm mới -->
+                        <a href="products/${p.id}.html" class="relative bg-slate-100 aspect-square overflow-hidden block">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            
                             ${p.heavy ? `<span class="absolute top-2 left-2 bg-amber-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">Đồ nặng</span>` : ''}
-                            
                             ${hasDiscount ? `<span class="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">-${discountPercent}%</span>` : ''}
-                        </div>
+                        </a>
 
                         <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                             <div>
                                 <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">${p.unit}</span>
-                                <h3 class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1">${p.name}</h3>
+                                <!-- Click mở trang chi tiết sản phẩm mới -->
+                                <a href="products/${p.id}.html" class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1 hover:text-brand-600 transition-colors block">
+                                    ${p.name}
+                                </a>
                                 <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${p.description || ''}</p>
                             </div>
 
