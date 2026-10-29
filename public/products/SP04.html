@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trứng Gà Ta - Tạp Hóa Bé Lan</title>
+    <title>Nấm Sò Đức Nhuận - Tạp Hóa Bé Lan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -42,25 +42,25 @@
             
             <!-- HÌNH ẢNH SẢN PHẨM -->
             <div class="aspect-square bg-slate-100 rounded-2xl overflow-hidden relative shadow-inner">
-                <img src="" alt="Trứng Gà Ta" class="w-full h-full object-cover">
+                <img src="" alt="Nấm Sò Đức Nhuận" class="w-full h-full object-cover">
                 
-                <span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">-17%</span>
+                <span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">-13%</span>
             </div>
 
             <!-- THÔNG TIN SẢN PHẨM -->
             <div class="flex flex-col justify-between space-y-4">
                 <div class="space-y-3">
-                    <span class="text-xs font-bold text-brand-600 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-md inline-block">Vỉ 6 trứng</span>
-                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">Trứng Gà Ta</h1>
+                    <span class="text-xs font-bold text-brand-600 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-md inline-block">Kg</span>
+                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">Nấm Sò Đức Nhuận</h1>
                     
                     <div class="flex items-baseline gap-3 pt-1">
-                        <span class="text-2xl sm:text-3xl font-extrabold text-brand-600">30.000 ₫</span>
-                        <span class="text-base text-slate-400 line-through">36.000 ₫</span>
+                        <span class="text-2xl sm:text-3xl font-extrabold text-brand-600">65.000 ₫</span>
+                        <span class="text-base text-slate-400 line-through">75.000 ₫</span>
                     </div>
 
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-xs sm:text-sm text-slate-600 space-y-2">
                         <p class="font-bold text-slate-800 uppercase tracking-wider text-xs">Mô tả chi tiết:</p>
-                        <p class="leading-relaxed">Chưa có mô tả cho sản phẩm này.</p>
+                        <p class="leading-relaxed">Sản phẩm OCOP 3 sao, được sản xuất tại HTX Sản xuất và kinh doanh nấm Đức Nhuận</p>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
         function addToCartAndRedirect(productId) {
             let cart = JSON.parse(localStorage.getItem('cart_culan')) || [];
             // Lấy thông tin từ object nhúng sẵn
-            const product = {"id":"SP04","name":"Trứng Gà Ta","category":"Thực phẩm","price":30000,"originalPrice":36000,"unit":"Vỉ 6 trứng","heavy":false,"image":"","description":""};
+            const product = {"id":"SP04","name":"Nấm Sò Đức Nhuận","category":"Thực phẩm","price":65000,"originalPrice":75000,"unit":"Kg","heavy":false,"image":"","description":"Sản phẩm OCOP 3 sao, được sản xuất tại HTX Sản xuất và kinh doanh nấm Đức Nhuận"};
             const existItem = cart.find(item => item.id === productId);
             
             if (existItem) {

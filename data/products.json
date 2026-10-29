@@ -1,14 +1,14 @@
 [
   {
     "id": "SP01",
-    "name": "Thùng Bia Larue (24 lon)",
-    "category": "Đồ uống",
-    "price": 245000,
-    "originalPrice": 250000,
-    "unit": "Thùng",
+    "name": "Dầu Phụng Long Phụng",
+    "category": "Gia vị & Bếp",
+    "price": 100000,
+    "originalPrice": 120000,
+    "unit": "Lít",
     "heavy": false,
     "image": "",
-    "description": "Thùng 24 lon 330ml"
+    "description": ""
   },
   {
     "id": "SP02",
@@ -34,13 +34,13 @@
   },
   {
     "id": "SP04",
-    "name": "Trứng Gà Ta",
+    "name": "Nấm Sò Đức Nhuận",
     "category": "Thực phẩm",
-    "price": 30000,
-    "originalPrice": 36000,
-    "unit": "Vỉ 6 trứng",
+    "price": 65000,
+    "originalPrice": 75000,
+    "unit": "Kg",
     "heavy": false,
     "image": "",
-    "description": ""
+    "description": "Sản phẩm OCOP 3 sao, được sản xuất tại HTX Sản xuất và kinh doanh nấm Đức Nhuận"
   }
 ]

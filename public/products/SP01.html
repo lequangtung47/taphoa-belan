@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thùng Bia Larue (24 lon) - Tạp Hóa Bé Lan</title>
+    <title>Dầu Phụng Long Phụng - Tạp Hóa Bé Lan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -42,25 +42,25 @@
             
             <!-- HÌNH ẢNH SẢN PHẨM -->
             <div class="aspect-square bg-slate-100 rounded-2xl overflow-hidden relative shadow-inner">
-                <img src="" alt="Thùng Bia Larue (24 lon)" class="w-full h-full object-cover">
+                <img src="" alt="Dầu Phụng Long Phụng" class="w-full h-full object-cover">
                 
-                <span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">-2%</span>
+                <span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow">-17%</span>
             </div>
 
             <!-- THÔNG TIN SẢN PHẨM -->
             <div class="flex flex-col justify-between space-y-4">
                 <div class="space-y-3">
-                    <span class="text-xs font-bold text-brand-600 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-md inline-block">Thùng</span>
-                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">Thùng Bia Larue (24 lon)</h1>
+                    <span class="text-xs font-bold text-brand-600 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-md inline-block">Lít</span>
+                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">Dầu Phụng Long Phụng</h1>
                     
                     <div class="flex items-baseline gap-3 pt-1">
-                        <span class="text-2xl sm:text-3xl font-extrabold text-brand-600">245.000 ₫</span>
-                        <span class="text-base text-slate-400 line-through">250.000 ₫</span>
+                        <span class="text-2xl sm:text-3xl font-extrabold text-brand-600">100.000 ₫</span>
+                        <span class="text-base text-slate-400 line-through">120.000 ₫</span>
                     </div>
 
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-xs sm:text-sm text-slate-600 space-y-2">
                         <p class="font-bold text-slate-800 uppercase tracking-wider text-xs">Mô tả chi tiết:</p>
-                        <p class="leading-relaxed">Thùng 24 lon 330ml</p>
+                        <p class="leading-relaxed">Chưa có mô tả cho sản phẩm này.</p>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
         function addToCartAndRedirect(productId) {
             let cart = JSON.parse(localStorage.getItem('cart_culan')) || [];
             // Lấy thông tin từ object nhúng sẵn
-            const product = {"id":"SP01","name":"Thùng Bia Larue (24 lon)","category":"Đồ uống","price":245000,"originalPrice":250000,"unit":"Thùng","heavy":false,"image":"","description":"Thùng 24 lon 330ml"};
+            const product = {"id":"SP01","name":"Dầu Phụng Long Phụng","category":"Gia vị & Bếp","price":100000,"originalPrice":120000,"unit":"Lít","heavy":false,"image":"","description":""};
             const existItem = cart.find(item => item.id === productId);
             
             if (existItem) {

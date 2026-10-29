@@ -773,11 +773,14 @@
             grid.innerHTML = filtered.map(p => {
                 const hasDiscount = p.originalPrice && p.originalPrice > p.price;
                 const discountPercent = hasDiscount ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+                
+                // Dùng đường dẫn tương đối chuẩn cho cả Local và Web thật
+                const productUrl = `./products/${p.id}.html`;
 
                 return `
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden group">
-                        <!-- Click mở trang chi tiết sản phẩm mới -->
-                        <a href="products/${p.id}.html" class="relative bg-slate-100 aspect-square overflow-hidden block">
+                        <!-- Click vào hình ảnh chuyển sang trang chi tiết -->
+                        <a href="${productUrl}" class="relative bg-slate-100 aspect-square overflow-hidden block">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             ${p.heavy ? `<span class="absolute top-2 left-2 bg-amber-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">Đồ nặng</span>` : ''}
                             ${hasDiscount ? `<span class="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">-${discountPercent}%</span>` : ''}
@@ -786,8 +789,8 @@
                         <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                             <div>
                                 <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">${p.unit}</span>
-                                <!-- Click mở trang chi tiết sản phẩm mới -->
-                                <a href="products/${p.id}.html" class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1 hover:text-brand-600 transition-colors block">
+                                <!-- Click vào tiêu đề chuyển sang trang chi tiết -->
+                                <a href="${productUrl}" class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1 hover:text-brand-600 transition-colors block">
                                     ${p.name}
                                 </a>
                                 <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${p.description || ''}</p>
