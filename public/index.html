@@ -44,21 +44,22 @@
     </style>
 </head>
 <body class="flex flex-col min-h-full text-slate-800">
-
-    <!-- TOP ANNOUNCEMENT BANNER -->
-    <div class="bg-gradient-to-r from-emerald-700 via-brand-600 to-teal-700 text-white text-xs py-2 px-3 shadow-sm relative z-30">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center sm:text-left">
-            <div class="flex items-center gap-2 font-medium justify-center sm:justify-start">
-                <span class="inline-flex items-center rounded-full bg-emerald-500/30 px-2 py-0.5 text-[11px] font-semibold text-emerald-100 ring-1 ring-inset ring-emerald-400/30">
-                    <i data-lucide="clock" class="w-3 h-3 mr-1 inline"></i> Lịch Vận Hành
+<!-- TOP ANNOUNCEMENT BANNER (TỐI ƯU GỌN 1 DÒNG CHO MOBILE) -->
+    <div class="bg-gradient-to-r from-emerald-700 via-brand-600 to-teal-700 text-white text-[11px] py-1.5 px-3 shadow-sm relative z-30">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+            <!-- Thông tin chính rút gọn -->
+            <div class="flex items-center gap-1.5 font-medium truncate">
+                <span class="bg-emerald-500/30 px-1.5 py-0.5 rounded-full text-[10px] font-bold text-emerald-100 shrink-0">
+                    ⚡ Lịch giao
                 </span>
-                <span class="text-[11px] sm:text-xs">Chốt đơn T2 - T6 | Giao tận nhà T7 & CN (Freeship đơn từ 300K)</span>
+                <span class="truncate">Chốt T2-T6 | Giao T7 & CN (Freeship từ 300K)</span>
             </div>
-            <div class="flex items-center gap-3 text-[11px] opacity-90 justify-center">
-                <span class="hidden md:inline"><i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>Đổi trả tận nơi</span>
-                <span class="hidden md:inline">•</span>
-                <span><i data-lucide="phone" class="w-3 h-3 inline mr-1"></i>Hotline/Zalo: 086.7676.416</span>
-            </div>
+
+            <!-- Hotline thu gọn bên phải -->
+            <a href="tel:0867676416" class="shrink-0 flex items-center gap-1 font-semibold text-emerald-100 hover:text-white text-[10px] bg-white/10 px-2 py-0.5 rounded-full">
+                <i data-lucide="phone" class="w-3 h-3"></i>
+                <span class="hidden sm:inline">086.7676.416</span>
+            </a>
         </div>
     </div>
 
@@ -123,25 +124,25 @@
         </div>
     </header>
 
-    <!-- PROMO MARQUEE TICKER (GỌN GÀNG 1 DÒNG CHẠY NGANG) -->
-    <section class="bg-emerald-900 text-emerald-100 py-2 border-b border-emerald-800 overflow-hidden relative z-10 marquee-container">
+    <!-- PROMO MARQUEE TICKER (TỐI ƯU SÚC TÍCH, KHÔNG TRÙNG LỊCH GIAO) -->
+    <section class="bg-emerald-900 text-emerald-100 py-1.5 border-b border-emerald-800 overflow-hidden relative z-10 marquee-container">
         <div class="flex whitespace-nowrap animate-marquee">
             <!-- Dãy 1 -->
             <div class="flex items-center gap-8 px-4 text-xs font-medium">
-                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Giao Hàng Tận Nhà T7 - CN: Đặt trước T2-T6, thong thả nhận hàng cuối tuần.</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo, bia, nước giặt... Không lo mang vác!</span>
                 <span class="text-emerald-700">•</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo thùng, bia, nước giặt 3.6kg... Không lo mang vác!</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> Thanh Toán VietQR Tự Động Qua payOS</span>
                 <span class="text-emerald-700">•</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> VietQR Auto Check: Thanh toán mượt mà, xác nhận tự động qua payOS.</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Miễn Phí Giao Hàng Cho Đơn Từ 300.000đ</span>
                 <span class="text-emerald-700">•</span>
             </div>
             <!-- Dãy 2 -->
             <div class="flex items-center gap-8 px-4 text-xs font-medium">
-                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Giao Hàng Tận Nhà T7 - CN: Đặt trước T2-T6, thong thả nhận hàng cuối tuần.</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo, bia, nước giặt... Không lo mang vác!</span>
                 <span class="text-emerald-700">•</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="package-check" class="w-3.5 h-3.5 text-emerald-400"></i> Chuyên Đồ Nặng & Cồng Kềnh: Gạo thùng, bia, nước giặt 3.6kg... Không lo mang vác!</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> Thanh Toán VietQR Tự Động Qua payOS</span>
                 <span class="text-emerald-700">•</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="qr-code" class="w-3.5 h-3.5 text-sky-400"></i> VietQR Auto Check: Thanh toán mượt mà, xác nhận tự động qua payOS.</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-400"></i> Miễn Phí Giao Hàng Cho Đơn Từ 300.000đ</span>
                 <span class="text-emerald-700">•</span>
             </div>
         </div>
